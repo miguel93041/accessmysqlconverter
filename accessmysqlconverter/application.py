@@ -15,7 +15,7 @@ from accessmysqlconverter.accesshandler import Accesshandler
 
 script_dir = path.dirname(argv[0])
 author = "miguel93041"
-version = "1.0.0"
+version = "1.0.1"
 title = "SQLConverter by {} ({})".format(author, version)
 icon = path.join(script_dir, "images\\SQLConverter.ico")
 
