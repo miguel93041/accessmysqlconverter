@@ -38,7 +38,7 @@ setup(
         'images': [
             'images/hide_pwd.png',
             'images/watch_pwd.png',
-            'images/SQLConverter.ico',
+            'images/icon.ico',
         ],
     },
 )
