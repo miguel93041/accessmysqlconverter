@@ -13,11 +13,13 @@ from tkinter.ttk import Progressbar, Checkbutton, Button, Entry
 from accessmysqlconverter.accessconnector import Accessconnector, ODBCDriverNotFoundError, AccessConnectionError
 from accessmysqlconverter.accesshandler import Accesshandler
 
-script_dir = path.dirname(argv[0])
+
+module_dir = path.dirname(__file__)
 author = "miguel93041"
-version = "1.0.1"
+version = "1.0.3"
 title = "SQLConverter by {} ({})".format(author, version)
-icon = path.join(script_dir, "images\\SQLConverter.ico")
+icon = path.join(module_dir, 'images\\icon.ico')
+
 
 class StringDialog(simpledialog._QueryString):
     """Class for overwriting tkinter window icon with mine"""
@@ -89,7 +91,7 @@ class Application(Frame):
         self._password_entry = Entry(self._master, width="58", show="*")
         self._password_entry.grid(row=1, column=1)
 
-        self._password_show_image = PhotoImage(file=path.join(script_dir, "images\\watch_pwd.png")).subsample(8, 8)
+        self._password_show_image = PhotoImage(file=path.join(module_dir, "images\\watch_pwd.png")).subsample(8, 8)
         self._password_show_button = Button(self._master, width="3", command=self._show_hide_password, image=self._password_show_image)
         self._password_show_button.grid(row=1, column=2)
 
@@ -202,13 +204,13 @@ class Application(Frame):
         if self._show_password:
             self._password_entry.config(show="*")
             try:
-                self._password_show_image = PhotoImage(file=path.join(script_dir, "images\\watch_pwd.png")).subsample(8, 8)
+                self._password_show_image = PhotoImage(file=path.join(module_dir, "images\\watch_pwd.png")).subsample(8, 8)
             except Exception as ex:
                 messagebox.showerror("Error", ex.args[0])
         else:
             self._password_entry.config(show="")
             try:
-                self._password_show_image = PhotoImage(file=path.join(script_dir, "images\\hide_pwd.png")).subsample(8, 8)
+                self._password_show_image = PhotoImage(file=path.join(module_dir, "images\\hide_pwd.png")).subsample(8, 8)
             except Exception as ex:
                 messagebox.showerror("Error", ex.args[0])
         self._password_show_button.config(image=self._password_show_image)
@@ -250,4 +252,5 @@ def main(arguments):
 
 
 if __name__ == '__main__':
+    print(__file__)
     main(argv)

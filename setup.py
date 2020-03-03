@@ -7,7 +7,7 @@ requirements = ["pyodbc>=4"]
 
 setup(
     name="accessmysqlconverter",
-    version="1.0.1",
+    version="1.0.3",
     author="miguel93041",
     author_email="miguel.granel.f@gmail.com",
     description="A package to convert MS Access (.mdb, .accdb) into a SQL file (Optionally with It's data)",
@@ -33,4 +33,12 @@ setup(
         'Programming Language :: Python :: 3.8',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
     ],
+    include_package_data=True,
+    package_data={
+        'images': [
+            'images/hide_pwd.png',
+            'images/watch_pwd.png',
+            'images/SQLConverter.ico',
+        ],
+    },
 )
