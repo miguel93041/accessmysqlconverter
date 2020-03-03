@@ -1,5 +1,6 @@
 # Idea project
 .idea/
+accessmysqlconverter/__pycache__/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
