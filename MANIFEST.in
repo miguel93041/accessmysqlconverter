@@ -1,0 +1,7 @@
+include LICENSE
+include MANIFEST.IN
+include README.md
+include requirements_dev.txt
+
+include accessmysqlconverter/images/*.png
+include accessmysqlconverter/images/*.ico
