@@ -4,7 +4,7 @@ AccessMySQLConverter aims to provide a tool which converts MS Access database fi
 ## Installation
 To install it you must have Python 3.x installed and run in the command prompt
 
-**pip install accessmysqlconverter**
+**pip install --no-cache-dir --upgrade accessmysqlconverter**
 
 ## Run it
 For executing the program run in the command prompt the following instruction
