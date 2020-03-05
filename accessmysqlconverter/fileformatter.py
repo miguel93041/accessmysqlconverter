@@ -119,7 +119,21 @@ class Fileformatter:
             counter_value = 0
             for value in row:
                 var_type = columns[counter_value][5]
-                if isinstance(value, str) or var_type == "DATETIME":
+                if var_type == "DATETIME":        # Transform DATETIME var into STRING
+                    value = "{}".format(value)
+                if isinstance(value, str):
+                    index = value.find("\\")        # Check if char \ is in string
+                    for _ in range(value.count("\\")):
+                        value = value[:index] + '\\' + value[index:]
+                        index = value.find("\\", index + 2)
+                    index = value.find("\'")        # Check if char ' is in string
+                    for _ in range(value.count("\'")):
+                        value = value[:index] + '\\' + value[index:]
+                        index = value.find("\'", index + 2)
+                    index = value.find("\"")        # Check if char " is in string
+                    for _ in range(value.count("\"")):
+                        value = value[:index] + '\\' + value[index:]
+                        index = value.find("\"", index + 2)
                     insert_line += "'{}'".format(value)
                 else:
                     if value is not None:

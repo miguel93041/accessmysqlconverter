@@ -16,7 +16,7 @@ from accessmysqlconverter.accesshandler import Accesshandler
 
 module_dir = path.dirname(__file__)
 author = "miguel93041"
-version = "1.0.4"
+version = "1.1.0"
 title = "AccessMySQLConverter by {} ({})".format(author, version)
 icon = path.join(module_dir, 'images\\icon.ico')
 
@@ -135,7 +135,7 @@ class Application(Frame):
         except (AccessConnectionError, ODBCDriverNotFoundError) as ex:
             self._master.config(cursor="")
             self._convert_progressbar["value"] = 100
-            messagebox.showerror("Error", ex.args[1])
+            messagebox.showerror("Error", ex)
         else:
             cur = con.cursor()
             database_name = StringDialog.ask_string(title_="Database name", prompt="Name for database:")
@@ -206,13 +206,13 @@ class Application(Frame):
             try:
                 self._password_show_image = PhotoImage(file=path.join(module_dir, "images\\watch_pwd.png")).subsample(8, 8)
             except Exception as ex:
-                messagebox.showerror("Error", ex.args[0])
+                messagebox.showerror("Error", ex)
         else:
             self._password_entry.config(show="")
             try:
                 self._password_show_image = PhotoImage(file=path.join(module_dir, "images\\hide_pwd.png")).subsample(8, 8)
             except Exception as ex:
-                messagebox.showerror("Error", ex.args[0])
+                messagebox.showerror("Error", ex)
         self._password_show_button.config(image=self._password_show_image)
         self._show_password = not self._show_password
 
@@ -245,7 +245,7 @@ def main(arguments):
     try:
         root.iconbitmap(icon)
     except Exception as ex:
-        messagebox.showerror("Error", ex.args[0])
+        messagebox.showerror("Error", ex)
 
     app = Application(master=root, arguments=arguments)
     app.mainloop()

@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+from accessmysqlconverter.application import version, author
 
 with open("README.md", "r") as readme_file:
     readme = readme_file.read()
@@ -7,8 +8,8 @@ requirements = ["pyodbc>=4"]
 
 setup(
     name="accessmysqlconverter",
-    version="1.0.4",
-    author="miguel93041",
+    version=version,
+    author=author,
     author_email="miguel.granel.f@gmail.com",
     description="A package to convert MS Access (.mdb, .accdb) into a SQL file (Optionally with It's data)",
     long_description=readme,

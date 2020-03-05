@@ -48,7 +48,7 @@ class Accessconnector:
             con.add_output_converter(SQL_WVARCHAR, self._decode_sketchy_utf16)
             return con
         except Error as ex:
-            raise AccessConnectionError(ex.args[1])
+            raise AccessConnectionError(ex)
 
     @staticmethod
     def _decode_sketchy_utf16(raw_bytes):
