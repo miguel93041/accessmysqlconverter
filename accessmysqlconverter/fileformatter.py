@@ -102,46 +102,66 @@ class Fileformatter:
 
     def write_table_data(self, table_name, columns, data):
         """Write data of table"""
-        print("--", file=self.file)
-        print("-- Data for table `{}`".format(table_name), file=self.file)
-        print("--", file=self.file)
+        if len(data) != 0:
+            print("--", file=self.file)
+            print("-- Data for table `{}`".format(table_name), file=self.file)
+            print("--", file=self.file)
+            self.write_table_insert_header(columns, table_name)
+            self.write_table_insert_values(columns, data)
 
+    def write_table_insert_header(self, columns, table_name):
+        """Write insert table statement"""
+        insert_header = "INSERT INTO `{}` (".format(table_name)
+        for column in columns:
+            column_name = column[3]
+            insert_header += "`{}`".format(column_name)
+            if column != columns[-1]:
+                insert_header += ", "
+        insert_header += ") VALUES"
+        print(insert_header, file=self.file)
+
+    def write_table_insert_values(self, columns, data):
+        """Write insert table values"""
         for row in data:
-            insert_line = "INSERT INTO `{}` (".format(table_name)
-            counter_row = 0
-            for column in columns:
-                column_name = column[3]
-                insert_line += column_name
-                if counter_row != (columns.__len__() - 1):
-                    insert_line += ", "
-                counter_row += 1
-            insert_line += ") VALUES ("
-            counter_value = 0
-            for value in row:
-                var_type = columns[counter_value][5]
-                if var_type == "DATETIME":        # Transform DATETIME var into STRING
-                    value = "{}".format(value)
-                if isinstance(value, str):
-                    index = value.find("\\")        # Check if char \ is in string
-                    for _ in range(value.count("\\")):
-                        value = value[:index] + '\\' + value[index:]
-                        index = value.find("\\", index + 2)
-                    index = value.find("\'")        # Check if char ' is in string
-                    for _ in range(value.count("\'")):
-                        value = value[:index] + '\\' + value[index:]
-                        index = value.find("\'", index + 2)
-                    index = value.find("\"")        # Check if char " is in string
-                    for _ in range(value.count("\"")):
-                        value = value[:index] + '\\' + value[index:]
-                        index = value.find("\"", index + 2)
-                    insert_line += "'{}'".format(value)
-                else:
-                    if value is not None:
-                        insert_line += "{}".format(value)
-                    else:
-                        insert_line += "'{}'".format("")
-                if counter_value != (columns.__len__() - 1):
-                    insert_line += ", "
-                counter_value += 1
-            insert_line += ");"
-            print(insert_line, file=self.file)
+            insert_value = self.get_table_insert_value(columns, row)
+            if row != data[-1]:
+                insert_value += ","
+            else:
+                insert_value += ";"
+            print(insert_value, file=self.file)
+
+    def get_table_insert_value(self, columns, row):
+        """Get insert table row value"""
+        insert_value = "("
+        value_index = 0
+        for value in row:
+            var_type = columns[value_index][5]
+            if var_type == "DATETIME":  # Transform DATETIME var into STRING
+                value = "{}".format(value)
+            if isinstance(value, str):
+                # Check if char \ is in string
+                index = value.find("\\")
+                for _ in range(value.count("\\")):
+                    value = value[:index] + '\\' + value[index:]
+                    index = value.find("\\", index + 2)
+                # Check if char ' is in string
+                index = value.find("\'")
+                for _ in range(value.count("\'")):
+                    value = value[:index] + '\\' + value[index:]
+                    index = value.find("\'", index + 2)
+                index = value.find("\"")
+                # Check if char " is in string
+                for _ in range(value.count("\"")):
+                    value = value[:index] + '\\' + value[index:]
+                    index = value.find("\"", index + 2)
+                insert_value += "'{}'".format(value)
+            elif value is not None:
+                insert_value += "{}".format(value)
+            else:
+                insert_value += "'{}'".format("")
+
+            if value_index != (columns.__len__() - 1):
+                insert_value += ", "
+            value_index += 1
+        insert_value += ")"
+        return insert_value

@@ -104,6 +104,5 @@ class Accesshandler:
 
     def _get_table_data(self, table_name):
         """Simple query to fetch all data inside a table"""
-        print(table_name)
         self._cur.execute("SELECT * FROM `{}`".format(table_name))
         return self._cur.fetchall()

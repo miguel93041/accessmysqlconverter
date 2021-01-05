@@ -252,5 +252,4 @@ def main(arguments):
 
 
 if __name__ == '__main__':
-    print(__file__)
     main(argv)
