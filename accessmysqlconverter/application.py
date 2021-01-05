@@ -16,7 +16,7 @@ from accessmysqlconverter.accesshandler import Accesshandler
 
 module_dir = path.dirname(__file__)
 author = "miguel93041"
-version = "1.1.0"
+version = "1.1.1"
 title = "AccessMySQLConverter by {} ({})".format(author, version)
 icon = path.join(module_dir, 'images\\icon.ico')
 
