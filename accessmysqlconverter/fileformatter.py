@@ -32,7 +32,7 @@ class Fileformatter:
         print("-- Table structure for table `{}`".format(table_name),
               file=self.file)
         print("--", file=self.file)
-        print("CREATE TABLE IF NOT EXISTS `{}` (".format(table_name),
+        print("CREATE TABLE `{}` (".format(table_name),
               file=self.file)
 
         counter_column = 0
