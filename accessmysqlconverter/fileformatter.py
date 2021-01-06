@@ -17,7 +17,7 @@ class Fileformatter:
         print("-- Database: `{}`".format(database_name), file=self.file)
         print("--", file=self.file)
         print(
-            "CREATE DATABASE IF NOT EXISTS `{}` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;".format(
+            "CREATE DATABASE `{}` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;".format(
                 database_name), file=self.file)
         print("USE `{}`;".format(database_name), file=self.file)
         print("", file=self.file)
