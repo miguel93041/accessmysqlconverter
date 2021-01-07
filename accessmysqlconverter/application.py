@@ -8,7 +8,7 @@ from sys import argv
 
 from tkinter import Frame, Label, IntVar, Tk, messagebox, PhotoImage, simpledialog
 from tkinter.filedialog import askdirectory, askopenfilename
-from tkinter.ttk import Progressbar, Checkbutton, Button, Entry
+from tkinter.ttk import Progressbar, Checkbutton, Button, Entry, Radiobutton
 
 from accessmysqlconverter.accessconnector import Accessconnector, ODBCDriverNotFoundError, AccessConnectionError
 from accessmysqlconverter.accesshandler import Accesshandler
@@ -16,7 +16,7 @@ from accessmysqlconverter.accesshandler import Accesshandler
 
 module_dir = path.dirname(__file__)
 author = "miguel93041"
-version = "1.1.2"
+version = "1.1.3"
 title = "AccessMySQLConverter by {} ({})".format(author, version)
 icon = path.join(module_dir, 'images\\icon.ico')
 
@@ -45,6 +45,7 @@ class Application(Frame):
         self._output_dir = ""
         self._same_dir = IntVar(value=1)        # By default output path is the same as file path
         self._show_password = False
+        self._db_type = IntVar(value=self.DB_TYPE_OTHER())
 
         self._master = master
         self.grid()
@@ -110,15 +111,26 @@ class Application(Frame):
         self._browse_dir_button = Button(self._master, text="...", width="3", command=self._browse_dir)
         self._browse_dir_button.grid(row=3, column=2)
 
-        # Frame for conversion
-        self._convert_frame = Frame(self._master)
-        self._convert_frame.grid(row=4, column=0, columnspan=2, pady=5)
+        # Radio buttons for PostgreSQL or MySQL/MariaDB
+        self._db_type_label = Label(self._master, width="22", anchor="e", text="Database type:")
+        self._db_type_label.grid(row=4, column=0)
 
-        # Convert widget
+        self._db_type_frame = Frame(self._master)
+        self._db_type_frame.grid(row=4, column=1, columnspan=2, pady=5)
+
+        self._radio_button_postgres = Radiobutton(self._db_type_frame, text="PostgreSQL", var=self._db_type, value=self.DB_TYPE_POSTGRESQL(), width="20")
+        self._radio_button_postgres.grid(row=0, column=0)
+
+        self._radio_button_other = Radiobutton(self._db_type_frame, text="MySQL/MariaDB ...", var=self._db_type, value=self.DB_TYPE_OTHER(), width="20")
+        self._radio_button_other.grid(row=0, column=1)
+
+        # Convert widget & progressbar
+        self._convert_frame = Frame(self._master)
+        self._convert_frame.grid(row=5, column=0, columnspan=2, pady=5)
+
         self._convert_button = Button(self._convert_frame, width="84", text="CREATE SQL FILE", command=self.convertSQL, state="disabled")
         self._convert_button.grid(row=0, column=0)
 
-        # Progressbar widget
         self._convert_progressbar = Progressbar(self._convert_frame, length="512")
         self._convert_progressbar.grid(row=1, column=0)
 
@@ -145,7 +157,7 @@ class Application(Frame):
                 else:
                     self._convert_progressbar["value"] = 66
                     accesshandler = Accesshandler(cur)
-                    accesshandler.make_file(self._output_dir, database_name)
+                    accesshandler.make_file(self._output_dir, database_name, self._db_type.get() == self.DB_TYPE_OTHER())
                     messagebox.showinfo("Completed", "SQL file generated successfully")
             cur.close()
             con.close()
@@ -236,11 +248,19 @@ class Application(Frame):
         """Getter for _same_dir"""
         return self._same_dir.get()
 
+    @staticmethod
+    def DB_TYPE_POSTGRESQL():
+        return 1
+
+    @staticmethod
+    def DB_TYPE_OTHER():
+        return 2
+
 
 def main(arguments):
     root = Tk()
     root.configure(relief='flat', borderwidth=10)
-    root.resizable(True, False)
+    root.resizable(False, False)
     root.title(title)
     try:
         root.iconbitmap(icon)

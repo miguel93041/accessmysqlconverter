@@ -12,20 +12,20 @@ class Accesshandler:
     def __init__(self, cur):
         self._cur = cur
 
-    def make_file(self, output_dir, database_name):
+    def make_file(self, output_dir, database_name, is_db_other):
         """Makes sql file"""
         table_names = self._get_table_names()
         suffix = ".sql"
         file = open("{}".format(path.join(output_dir, database_name + suffix)), "w+", encoding='utf-8')
         fileformatter = Fileformatter(file)
-        fileformatter.write_header(database_name)
+        fileformatter.write_header(database_name, is_db_other)
         for name in table_names:
-            fileformatter.write_table(name, self._get_columns(name))
+            fileformatter.write_table(name, self._get_columns(name), is_db_other)
 
         MsgBox = messagebox.askquestion('Import data', 'Do you want to import the data?', icon='warning')
         if MsgBox == "yes":
             for name in table_names:
-                fileformatter.write_table_data(name, self._get_table_columns(name), self._get_table_data(name))
+                fileformatter.write_table_data(name, self._get_table_columns(name), self._get_table_data(name), is_db_other)
 
         file.close()
 

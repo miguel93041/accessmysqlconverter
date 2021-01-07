@@ -1,4 +1,4 @@
-[![Version](https://img.shields.io/badge/Version-1.1.2-brightgreen)](https://github.com/miguel93041/accessmysqlconverter)
+[![Version](https://img.shields.io/badge/version-1.1.3-brightgreen)](https://github.com/miguel93041/accessmysqlconverter)
 [![License](https://img.shields.io/badge/license-GPL-blue.svg?style=flat)](https://github.com/miguel93041/accessmysqlconverter/blob/master/LICENSE)
 [![paypal](https://www.paypalobjects.com/en_US/ES/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=N8EGU933CPFV8)
 
