@@ -8,17 +8,18 @@ from pyodbc import connect, drivers as pyodrivers, SQL_WVARCHAR, Error
 
 
 class AccessConnectionError(Exception):
+    """AccessConnectionException"""
     pass
 
 
 class ODBCDriverNotFoundError(Exception):
+    """ODBCDriverException"""
     pass
 
 
 class Accessconnector:
-
-    @staticmethod
-    def driver(file_path):
+    """Connects python with the access file through an ODBC driver"""
+    def driver(self, file_path):
         """Gets ODBC driver, if not found throw exception"""
         drivers = [x for x in pyodrivers() if x.startswith('Microsoft Access Driver')]
         extension = path.splitext(file_path)[1]
@@ -50,8 +51,7 @@ class Accessconnector:
         except Error as ex:
             raise AccessConnectionError(ex)
 
-    @staticmethod
-    def _decode_sketchy_utf16(raw_bytes):
+    def _decode_sketchy_utf16(self, raw_bytes):
         """Method for ignoring utf-16le chars"""
         s = raw_bytes.decode("utf-16le", "ignore")
         try:
