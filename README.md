@@ -3,7 +3,7 @@
 [![paypal](https://www.paypalobjects.com/en_US/ES/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=N8EGU933CPFV8)
 
 # AccessMySQLConverter
-AccessMySQLConverter aims to provide a tool which converts MS Access database files (.mdb, .accdb) into a SQL file (compatible with PostgreSQL, MariaDB and MySQL) that can be run, generating It's structure (tables, ERM...) and if you select to, importing It's data
+AccessMySQLConverter aims to provide a tool which converts MS Access database files (.mdb, .accdb) into a SQL file (compatible with PostgreSQL, MariaDB and MySQL) that can be run, generating It's structure (tables, ERM...) and It's data
 
 ## Installation
 To install it you must have Python 3.x installed and run in the command prompt
